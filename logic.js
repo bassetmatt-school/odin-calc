@@ -3,6 +3,7 @@ const sub = function (a, b) { return a - b }
 const mul = function (a, b) { return a * b }
 const div = function (a, b) { return a / b }
 const mod = function (a, b) { return a % b }
+const div_euc = function (a, b) { return (a - (a % b)) / b }
 
 let state = {
     number1: null, // Float
@@ -34,6 +35,8 @@ let op_to_txt = function (operator) {
             return "/"
         case mod:
             return "%"
+        case div_euc:
+            return "//"
         default:
             break;
     }
@@ -45,7 +48,7 @@ let txt_to_op = {
     "mul": mul,
     "div": div,
     "mod": mod,
-    "div_eucl": null,
+    "div_euc": div_euc,
 }
 
 let update_display = function () {
