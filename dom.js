@@ -24,8 +24,13 @@ document.querySelector("#op-dot").addEventListener("click", _evt => {
     process_dot()
 })
 
+document.querySelector("#op-back").addEventListener("click", _evt => {
+    backspace()
+})
+
 document.addEventListener("keydown", evt => {
     const keyName = evt.key
+    console.log(keyName)
     if ("0123456789".includes(keyName)) {
         process_nb(keyName)
         return
@@ -58,6 +63,9 @@ document.addEventListener("keydown", evt => {
             break;
         case "Escape":
             clear()
+            break;
+        case "Backspace":
+            backspace()
             break;
         default:
             break;

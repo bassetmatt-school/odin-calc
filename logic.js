@@ -13,7 +13,7 @@ let state = {
 
 let operate = function () {
     if (state.number1 != null && state.operator != null && state.number2 != null) {
-        process_nb("")
+        process_nb("") // Avoids converts number2 into a float
         let res = state.operator(state.number1, state.number2)
         state.number1 = res
         state.operator = null
@@ -121,5 +121,34 @@ let clear = function () {
     state.number1 = 0
     state.number2 = null
     state.operator = null
+    update_display()
+}
+
+let backspace = function () {
+    if (state.operator != null && state.number2 === null) {
+        state.operator = null
+        update_display()
+        return
+    }
+
+    if (state.operator === null) {
+        key = "number1"
+    } else {
+        key = "number2"
+    }
+
+    if (state[key] === null) {
+        state[key] = 0
+    } else {
+        let key_str = state[key].toString()
+
+        if (key_str.length > 1) {
+            state[key] = key_str.slice(0, key_str.length - 1)
+        } else if (key === "number1") {
+            state[key] = 0
+        } else if (key === "number2") {
+            state[key] = null
+        }
+    }
     update_display()
 }
