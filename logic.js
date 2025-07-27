@@ -92,7 +92,11 @@ let process_op = function (op) {
     if (state.number1 === null) {
         state.number1 = parseFloat(document.querySelector("#display").textContent)
     }
-    state.operator = txt_to_op[op]
+    if (state.operator === div && op === "div") {
+        state.operator = txt_to_op["div_euc"]
+    } else {
+        state.operator = txt_to_op[op]
+    }
     update_display()
 }
 
@@ -103,15 +107,19 @@ let process_dot = function () {
         key = "number2"
     }
 
-    if (state[key] === null || state[key] === 0) {
+    if (/\./.test(state[key])) {
+        return
+    } else if (state[key] === null || state[key] === 0) {
         state[key] = "0."
     } else {
         state[key] += "."
     }
+    update_display()
 }
 
 let clear = function () {
     state.number1 = 0
     state.number2 = null
     state.operator = null
+    update_display()
 }
