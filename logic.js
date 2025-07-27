@@ -52,12 +52,9 @@ let txt_to_op = {
 }
 
 let update_display = function () {
-
-    let disp = document.querySelector("#display")
     let text = ""
     if (state.number1 != null) {
         text += state.number1
-        // TODO: Test if float
     }
     if (state.operator != null) {
         text += op_to_txt(state.operator)
@@ -65,7 +62,7 @@ let update_display = function () {
     if (state.number2 != null) {
         text += state.number2
     }
-    disp.textContent = text
+    document.querySelector("#display").textContent = text
 }
 
 let process_nb = function (nb) {
@@ -131,24 +128,25 @@ let backspace = function () {
         return
     }
 
+    if (state.number1 === null) {
+        clear()
+    }
+
     if (state.operator === null) {
         key = "number1"
     } else {
         key = "number2"
     }
 
-    if (state[key] === null) {
-        state[key] = 0
-    } else {
-        let key_str = state[key].toString()
+    let key_str = state[key].toString()
 
-        if (key_str.length > 1) {
-            state[key] = key_str.slice(0, key_str.length - 1)
-        } else if (key === "number1") {
-            state[key] = 0
-        } else if (key === "number2") {
-            state[key] = null
-        }
+    if (key_str.length > 1) {
+        state[key] = key_str.slice(0, key_str.length - 1)
+    } else if (key === "number1") {
+        state[key] = 0
+    } else if (key === "number2") {
+        state[key] = null
     }
+
     update_display()
 }
